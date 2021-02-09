@@ -1,5 +1,5 @@
 from tkinter import *
-from robot import *
+from robot import Robot
 
 class Arene:
 	def __init__(self,matrice_x=25,matrice_y=25):
@@ -13,14 +13,18 @@ class Arene:
 		self.label_title = Label(self.init_window, text="Bienvenue sur cette fenêtre inutile", font = ("",20), bg='#41B77F', fg='white')
 		self.label_title.pack(side=BOTTOM)
 
+		#bouton
+		self.button_haut = Button(self.init_window, text="avance", command=self.AvancerRobot)
+		self.button_haut.pack(side=LEFT) 
+
 		# matrice à deux dimensions
 		self.tableau = []
 		for i in range(matrice_x):
 		    self.tableau.append([0] * matrice_y)
 		
 		# Ajout du Robot dans l'Arène
-		robot= Robot(self.tableau, "robot")
-		pos= robot.pos
+		self.robot= Robot(self.tableau, "robot")
+		pos= self.robot.pos
 		self.tableau[int(pos[0])][int(pos[1])]=2 #conversion des floats en entier
 		 
 		# les 2 couleurs à utiliser
@@ -68,11 +72,23 @@ class Arene:
 		# boucle principale
 		self.init_window.mainloop()
 
+	def AvancerRobot(self):
+		pos= self.robot.pos
+		self.tableau[int(pos[0])][int(pos[1])]=0 #conversion des floats en entier
+		self.robot.changerVitesse(60)
+		self.robot.seDeplacer()
+		pos= self.robot.pos
+		self.tableau[int(pos[0])][int(pos[1])]=2 #conversion des floats en entier
+		self.afficher(self.tableau)
+
+
+
 #-------------------------------------------------------
 # programme
 a=Arene()
 a.afficher(a.tableau)
 # binding de la fonction modifierTableau sur le canevas
 a.can.bind("<Button-1>", a.modifierTableau)
+
 # boucle principale
 a.init_window.mainloop()
