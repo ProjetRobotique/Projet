@@ -1,21 +1,31 @@
-from robot import Robot
-from arene import Arene
-from fenetre import Fenetre
-from controler import Controler
-import time
+from robot2 import Robot
+from affichageGraphique import Arene, Fenetre
+from controleur import Controleur
+from time import sleep
 
-begin = time.time()
+class Simulation:
 
-#une instance de robot doit etre crée
+    def __init__(self, robot, arene, controleur, fenetre, dep_robot_x, dep_robot_y):
+        self.arene = arene
+        self.robot = robot
+        self.controleur = controleur
+        self.fenetre = fenetre
+        self.arene.placerRobot(dep_robot_x, dep_robot_y)
 
-a=Arene()
-c= Controler(a.robot)
-f= Fenetre(a, c)# ajouter le robot en paramètre
-f.afficher()
-threadf= Thread(target=f.boucle, args=(fps,))
-threadf.start()
-f.init_window.mainloop()
+    def avance3sec(self):
+        self.robot.setVitesse(1.08)
+        
+        for i in range(3):
+            self.arene.placerRobot
 
-end = time.time()
+        self.robot.setVitesse(0)
 
-print("temps d'exécution : "+ str(end - begin)+"s")
+robot = Robot
+arene = Arene(30, 25, robot)
+fenetre = Fenetre(arene)
+controleur = Controleur(robot, arene)
+simulation = Simulation(robot, arene, controleur, fenetre, 15, 12)
+
+
+fenetre.afficher()
+fenetre.init_window.mainloop()
