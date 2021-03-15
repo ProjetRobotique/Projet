@@ -1,10 +1,14 @@
 from robot import Robot
 from math import pi as PI
+import time
 
 class Controler:
 	def __init__(self, robot):
-		self.robot = robot
-		self.enMarche = False
+		self.exit=False
+		self.robot= robot
+		self.enMarche= False
+		self.tab=[0,0,0,0,0,0,0]
+		self.action=-1
 
 	def boucle(self,fps):
 		while True:
@@ -68,8 +72,14 @@ class Controler:
 			if indice==-1:
 				print("Controler: Erreur indice=-1")
 			elif self.tab[indice]==0:
-				self.tab[indice]=1	
-	
+				self.tab[indice]=1
+
+	def demarrer(self):
+		self.enMarche= True
+
+	def arret(self):
+		self.enMarche= False
+
 	def augmenterVitesseRobot(self):
 		self.robot.changerVitesseSimple(1)
 		
@@ -84,9 +94,3 @@ class Controler:
 	
 	def tourneRobot_10(self):
 		self.robot.changerAngle(-PI/9)
-
-	def demarrer(self):
-		self.enMarche = True
-
-	def arret(self):
-		self.enMarche = False

@@ -1,14 +1,14 @@
 from robot import Robot
 from arene import Arene
 from fenetre import Fenetre
-from controler import Controler
 from threading import Thread
-import time
+from controler import Controler
+
+# Faire plusieurs threads
+# Faire un vrai controler
 
 fps=20
 # programme
-begin = time.time()
-
 r= Robot([],"Robot")
 c= Controler(r)
 a=Arene(c,r)
@@ -21,9 +21,5 @@ threadf.start()
 threada.start()
 threadc.start()
 
-
 # boucle principale
 f.init_window.mainloop()
-
-end = time.time()
-print("temps d'exécution : "+ str(end - begin)+"s")

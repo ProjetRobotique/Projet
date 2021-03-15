@@ -8,19 +8,20 @@ import time
 
 class Fenetre:
 	def __init__(self, arene, control):
-		self.exit=False
-		
 		# Ajout de l'arene
-		self.arene = arene
+		self.arene= arene
+
+		# En marche
+		self.exit= False
 
 		# Vitesse du robot
-		self.arene.robot.vitesse = 2
+		self.arene.robot.vitesse=2
 
 		#Robot
-		self.robot = self.arene.robot
+		self.robot= self.arene.robot
 
 		#Controler
-		self.control = control
+		self.control= control
 
 		self.init_window=Tk()
 		# fenêtre principale
@@ -52,16 +53,16 @@ class Fenetre:
 		self.frame_control.pack(side=LEFT)
 
 		#bouton de contrôle du Robot
-		self.button_demarrer = Button(self.frame_control, text="demarrer", command=self.control.demarrer)
+		self.button_demarrer = Button(self.frame_control, text="demarrer", command= lambda: self.control.signal("demarrer"))
 		self.button_demarrer.pack()
 
-		self.button_arret = Button(self.frame_control, text="arreter", command=self.control.arret)
+		self.button_arret = Button(self.frame_control, text="arreter", command= lambda: self.control.signal("arret"))
 		self.button_arret.pack()
 
 		self.button_haut = Button(self.frame_control, text="avance", command= self.arene.avancerRobot)
 		self.button_haut.pack()
 		
-		self.button_tourne= Button(self.frame_control, text="tourne à droite", command= self.control.tourneRobot)
+		self.button_tourne= Button(self.frame_control, text="tourne à droite", command= lambda: self.control.tourneRobot)
 		self.button_tourne.pack()
 		
 		self.button_tourne10= Button(self.frame_control, text="tourne de 10 degrés", command= self.control.tourneRobot10)
@@ -75,7 +76,7 @@ class Fenetre:
 		
 		self.button_diminueVitesse = Button(self.frame_control, text="ralentir", command=self.control.diminuerVitesseRobot)
 		self.button_diminueVitesse.pack()
-		
+
 		self.button_quit = Button(self.init_window, text="cliquer pour quitter", command=self.quit)
 		self.button_quit.pack(side=RIGHT)
 
@@ -94,7 +95,7 @@ class Fenetre:
 		self.can.pack()
 
 		self.can.bind("<Button-1>", self.modifierTableau)
-		
+
 		self.grille_affiche=[]
 		for i in range(len(self.arene.tableau)):
 			L=[]
@@ -112,6 +113,7 @@ class Fenetre:
 			for j in range(len(self.arene.tableau[i])):
 				self.can.itemconfig(self.grille_affiche[i][j] , fill = self.couleurs[self.arene.tableau[i][j]])
 
+	# A revoir, avec Arene
 	def modifierTableau(self,evt):
 		pos_x = int(evt.x / self.size)
 		pos_y = int(evt.y / self.size)
@@ -126,6 +128,7 @@ class Fenetre:
 
 	def boucle(self,fps):
 		while True:
+			# Demander au prof si c'est correcte
 			if self.exit:
 				break
 			self.updateFenetre()
@@ -136,10 +139,10 @@ class Fenetre:
 		self.afficher()
 		self.label_pos.configure(text="position: "+str(self.arene.robot.pos))
 		self.label_vitesse.configure(text="vitesse: "+str(self.arene.robot.vitesse*0.15*3.6)+" km/h")
-		self.label_angle.configure(text="angle: "+str(self.arene.robot.angle/PI*180))
+		self.label_angle.configure(text="angle: "+str(self.arene.robot.angle*180./PI%360))
 
 	def quit(self):
-		self.exit=True
+		self.exit= True
 		self.arene.exit=True
 		self.control.exit=True
 		self.init_window.destroy()
