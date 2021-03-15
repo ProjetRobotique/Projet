@@ -65,16 +65,16 @@ class Fenetre:
 		self.button_tourne= Button(self.frame_control, text="tourne à droite", command= lambda: self.control.tourneRobot)
 		self.button_tourne.pack()
 		
-		self.button_tourne10= Button(self.frame_control, text="tourne de 10 degrés", command= self.control.tourneRobot10)
+		self.button_tourne10= Button(self.frame_control, text="tourne de 10 degrés", command=lambda: self.control.signal("tourneRobot10"))
 		self.button_tourne10.pack()
 		
-		self.button_tourne_10= Button(self.frame_control, text="tourne de -10 degrés", command= self.control.tourneRobot_10)
+		self.button_tourne_10= Button(self.frame_control, text="tourne de -10 degrés", command=lambda: self.control.signal("tourneRobot_10"))
 		self.button_tourne_10.pack()
 		
-		self.button_augmenteVitesse = Button(self.frame_control, text="accelerer", command=self.control.augmenterVitesseRobot)
+		self.button_augmenteVitesse = Button(self.frame_control, text="accelerer", command=lambda:self.control.signal("augmenterVitesseRobot"))
 		self.button_augmenteVitesse.pack()
 		
-		self.button_diminueVitesse = Button(self.frame_control, text="ralentir", command=self.control.diminuerVitesseRobot)
+		self.button_diminueVitesse = Button(self.frame_control, text="ralentir", command=lambda:self.control.signal("diminuerVitesseRobot"))
 		self.button_diminueVitesse.pack()
 
 		self.button_quit = Button(self.init_window, text="cliquer pour quitter", command=self.quit)
@@ -132,7 +132,6 @@ class Fenetre:
 			if self.exit:
 				break
 			self.updateFenetre()
-			print("update")
 			time.sleep(1./fps)
 
 	def updateFenetre(self):

@@ -22,6 +22,8 @@ class Controler:
 		if self.action==-1:
 			return
 		# Execution de 1 commande
+		print(self.tab)
+		print(self.action)
 		if self.action==0:
 			self.robot.seDeplacer(1,0)
 		elif self.action==1:
@@ -34,25 +36,26 @@ class Controler:
 			self.diminuerVitesseRobot()
 		if self.action!=0:
 			self.tab[self.action]=0
-			self.action+=1
+		self.action+=1
 
 	def changeAction(self):
 		if self.action>=len(self.tab):
 			self.action=0
 		if self.tab[self.action]!=0:
 			return
-		self.action=-1
 		for i in range(self.action+1,len(self.tab)):
 			if self.tab[i]!=0:
 				self.action=i
-				break
+				return
 		if self.action==-1:
 			for i in range(0,self.action):
 				if self.tab[i]!=0:
 					self.action=i
-					break
+					return
+		self.action=-1
 
 	def signal(self, intention):
+		print("Signal recu: "+ intention)
 		if intention=="demarrer":
 			self.tab[0]=1
 		elif intention=="arreter":
