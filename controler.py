@@ -8,7 +8,6 @@ class Controler:
 		self.robot= robot
 		self.enMarche= False
 		self.tab=[0,0,0,0,0,0,0]
-		self.action=-1
 
 	def boucle(self,fps):
 		while True:
@@ -18,64 +17,53 @@ class Controler:
 			time.sleep(1./fps)
 
 	def update(self):
-		self.changeAction()
-		if self.action==-1:
+		action=-1
+		for i in range(len(self.tab)):
+			if self.tab[i]==1:
+				action=i
+				break
+		if action==-1:
 			return
-		# Execution de 1 commande
-		print(self.tab)
-		print(self.action)
-		if self.action==0:
-			self.robot.seDeplacer(1,0)
-		elif self.action==1:
-			self.tourneRobot10()
-		elif self.action==2:
-			self.tourneRobot_10()
-		elif self.action==3:
-			self.augmenterVitesseRobot()
-		elif self.action==4:
-			self.diminuerVitesseRobot()
-		if self.action!=0:
-			self.tab[self.action]=0
-		self.action+=1
 
-	def changeAction(self):
-		if self.action>=len(self.tab):
-			self.action=0
-		if self.tab[self.action]!=0:
-			return
-		for i in range(self.action+1,len(self.tab)):
-			if self.tab[i]!=0:
-				self.action=i
-				return
-		if self.action==-1:
-			for i in range(0,self.action):
-				if self.tab[i]!=0:
-					self.action=i
-					return
-		self.action=-1
+		if action==0:
+			self.demarrer()
+			self.tab[action]=0
+		elif action==1:
+			self.arret()
+			self.tab[action]=0
+		elif action==2:
+			self.tourneRobot10()
+			self.tab[action]=0
+		elif action==3:
+			self.tourneRobot_10()
+			self.tab[action]=0
+		elif action==4:
+			self.augmenterVitesseRobot()
+			self.tab[action]=0
+		elif action==5:
+			self.diminuerVitesseRobot()
+			self.tab[action]=0
 
 	def signal(self, intention):
 		print("Signal recu: "+ intention)
+		indice=-1
 		if intention=="demarrer":
-			self.tab[0]=1
-		elif intention=="arreter":
-			self.tab[0]=0
+			indice=0
+		elif intention=="arret":
+			indice=1
+		elif intention=="tourneRobot10":
+			indice=2
+		elif intention=="tourneRobot_10":
+			indice=3
+		elif intention=="augmenterVitesseRobot":
+			indice=4
+		elif intention=="diminuerVitesseRobot":
+			indice=5
 
-		else:
-			indice=-1
-			if intention=="tourneRobot10":
-				indice=1
-			elif intention=="tourneRobot_10":
-				indice=2
-			elif intention=="augmenterVitesseRobot":
-				indice=3
-			elif intention=="diminuerVitesseRobot":
-				indice=4
-
-			if indice==-1:
-				print("Controler: Erreur indice=-1")
-			elif self.tab[indice]==0:
-				self.tab[indice]=1
+		if indice==-1:
+			print("Controler: Erreur indice=-1")
+		elif self.tab[indice]==0:
+			self.tab[indice]=1
 
 	def demarrer(self):
 		self.enMarche= True
