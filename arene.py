@@ -45,34 +45,5 @@ class Arene:
 			time.sleep(1./fps)
 
 	def updateArene(self):
-		if self.robot.pos[0] >TAILLE_ARENE_X:
-			self.robot.pos[0]= TAILLE_ARENE_X-1
-		if self.robot.pos[1] >TAILLE_ARENE_Y:
-			self.robot.pos[1]= TAILLE_ARENE_Y-1
-
-		if self.robot.pos[0] <0:
-			self.robot.pos[0]= 0
-		if self.robot.pos[1] < 0:
-			self.robot.pos[1]= 0
-
-		a= self.robot.pos[0]
-		b= self.robot.pos[1]
-		for x in range(len(self.tableau)):
-			for y in range(len(self.tableau[x])):
-				if self.tableau[x][y]==0:
-					if int(a)==x and int(b)==y:
-						self.tableau[x][y]=2
-				elif self.tableau[x][y]==2:
-					if int(a)!=x or int(b)!=y:
-						self.tableau[x][y]=0
-				else:
-					if int(a)==x and int(b)==y:
-						print("Le robot est sur la même case qu'un obstacle")
-						self.tableau[x][y]=2
-
-
-		"""
-		self.tableau[int(x)][int(y)]=0 #conversion des floats en entier
-		if self.tableau[int(x)][int(y)]==1:
-			print("Le robot est sur la même case qu'un obstacle")
-		self.tableau[int(x)][int(y)]=2"""
+		if self.control.enMarche:
+			self.avancerRobot()
