@@ -1,4 +1,5 @@
 from robot import Robot
+import math
 
 class StrategyAvance:
 	def __init__(self, robot):
@@ -10,7 +11,7 @@ class StrategyAvance:
 		rayonRoue= self.robot.rayonRoue
 		self.robot.changerVitesseRoue(1, "LEFT")
 		self.robot.changerVitesseRoue(1, "RIGHT")
-		self.distance+=(math.pi*vitesse_avance*rayonRoue)/(180.0*fps)
+		self.distanceCourant+=(math.pi*vitesse_avance*rayonRoue)/(180.0*fps)
 		if self.stop():
 			self.robot.changerVitesseRoue(0, "LEFT")
 			self.robot.changerVitesseRoue(0, "RIGHT")
@@ -36,8 +37,7 @@ class StrategyTourneGauche:
 		vitesse_tourne= 1
 		self.robot.changerVitesseRoue(1, "RIGHT")
 		# Calcule de l'angle du Robot
-		self.angle= (self.angle+((rayonRoue*vitesse_tourne*1.0)/(fps*rayonRobot)))%360
-		self.robot.angle= self.angle
+		self.angleCourant= (self.angleCourant+((rayonRoue*vitesse_tourne*1.0)/(fps*rayonRobot)))%360
 		if self.stop():
 			self.robot.changerVitesseRoue(0, "RIGHT")
 
