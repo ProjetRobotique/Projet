@@ -4,9 +4,6 @@ from fenetre import Fenetre
 from threading import Thread
 from controler import Controler
 
-# Faire plusieurs threads
-# Faire un vrai controler
-
 fps=20
 # programme
 r= Robot([],"Robot")
