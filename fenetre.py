@@ -44,35 +44,28 @@ class Fenetre:
 		self.label_angle.pack()
 		self.label_vitesse= Label(self.frame_attribut, text="vitesse: "+str(self.robot.vitesse*0.15*3.6)+" km/h")
 		self.label_vitesse.pack()
+		self.label_vitesse_roue= Label(self.frame_attribut, text="vitesse roues: "+str(self.robot.vitesse_roue))
+		self.label_vitesse_roue.pack()
 
 		# Création d'une Frame pour le contrôle du robot
 		self.frame_control= LabelFrame(self.init_window, text="Contrôle Robot",labelanchor='n' ,relief="sunken", bd=5)
 		self.frame_control.pack(side=LEFT)
 
 		#bouton de contrôle du Robot
-		self.button_demarrer = Button(self.frame_control, text="demarrer", command= lambda: self.control.signal("demarrer"))
-		self.button_demarrer.pack()
-
 		self.button_arret = Button(self.frame_control, text="arreter", command= lambda: self.control.signal("arret"))
 		self.button_arret.pack()
 
-		self.button_haut = Button(self.frame_control, text="avance", command= self.arene.avancerRobot)
+		self.button_haut = Button(self.frame_control, text="avance", command= self.control.speedUp)
 		self.button_haut.pack()
-		
-		self.button_tourne= Button(self.frame_control, text="tourne à droite", command= lambda: self.control.tourneRobot)
-		self.button_tourne.pack()
-		
-		self.button_tourne10= Button(self.frame_control, text="tourne de 10 degrés", command=lambda: self.control.signal("tourneRobot10"))
-		self.button_tourne10.pack()
-		
-		self.button_tourne_10= Button(self.frame_control, text="tourne de -10 degrés", command=lambda: self.control.signal("tourneRobot_10"))
-		self.button_tourne_10.pack()
-		
-		self.button_augmenteVitesse = Button(self.frame_control, text="accelerer", command=lambda:self.control.signal("augmenterVitesseRobot"))
-		self.button_augmenteVitesse.pack()
-		
-		self.button_diminueVitesse = Button(self.frame_control, text="ralentir", command=lambda:self.control.signal("diminuerVitesseRobot"))
-		self.button_diminueVitesse.pack()
+
+		self.button_gauche = Button(self.frame_control, text="gauche", command= self.control.turnLeft)
+		self.button_gauche.pack()
+
+		self.button_droite = Button(self.frame_control, text="droite", command= self.control.turnRight)
+		self.button_droite.pack()
+
+		self.button_turnLeft = Button(self.frame_control, text="Tourner Gauche", command=lambda:self.control.signal("tournerGauche"))
+		self.button_turnLeft.pack()
 
 		self.button_quit = Button(self.init_window, text="cliquer pour quitter", command=self.quit)
 		self.button_quit.pack(side=RIGHT)
@@ -125,7 +118,6 @@ class Fenetre:
 
 	def boucle(self,fps):
 		while True:
-			# Demander au prof si c'est correcte
 			if self.exit:
 				break
 			self.updateFenetre()
@@ -135,10 +127,11 @@ class Fenetre:
 		self.afficher()
 		self.label_pos.configure(text="position: "+str(self.arene.robot.pos))
 		self.label_vitesse.configure(text="vitesse: "+str(self.arene.robot.vitesse*0.15*3.6)+" km/h")
-		self.label_angle.configure(text="angle: "+str(self.arene.robot.angle*180./PI%360))
+		self.label_angle.configure(text="angle: "+str(self.arene.robot.angle))
+		self.label_vitesse_roue.configure(text="vitesse roues: "+str(self.robot.vitesse_roue))
 
 	def quit(self):
-		self.exit= True
+		self.exit=True
 		self.arene.exit=True
 		self.control.exit=True
 		self.init_window.destroy()
