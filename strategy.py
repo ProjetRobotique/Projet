@@ -47,3 +47,25 @@ class StrategyTourneGauche:
 			self.robot.changerVitesseRoue(0, "RIGHT")
 			return True
 		return False
+
+	
+class StategyTracerCarre:
+	def __init__(self, robot):
+		self.robot= robot
+		self.s_avance= StrategyAvance(robot)
+		self.s_turnLeft= StrategyTourneGauche(robot)
+		self.tab= [s_avance, s_turnLeft, s_avance, s_turnLeft,s_avance, s_turnLeft, s_avance]
+		self.action=0
+
+	def run(self, fps):
+		if self.tab[self.action].stop():
+			self.action+=1
+			if self.stop(): return
+			else: self.tab[self.action].start()
+		self.tab[self.action].run()
+
+	def start(self):
+		self.action=0
+
+	def stop(self):
+		return self.action>=len(self.tab)
