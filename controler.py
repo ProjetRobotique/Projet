@@ -32,35 +32,21 @@ class Controler:
 			self.arret()
 			self.tab[action]=0
 		elif action==1:
-			self.tourneRobot10()
-			self.tab[action]=0
-		elif action==2:
-			self.tourneRobot_10()
-			self.tab[action]=0
-		elif action==3:
-			self.augmenterVitesseRobot()
-			self.tab[action]=0
-		elif action==4:
-			self.diminuerVitesseRobot()
+			self.speedUp()
 			self.tab[action]=0
 		elif action==5:
 			if not self.s_turnLeft.stop():
 				self.s_turnLeft.run(fps)
 			else: self.tab[action]=0
 
+
 	def signal(self, intention):
 		print("Signal recu: "+ intention)
 		indice=-1
 		if intention=="arret":
 			indice=0
-		elif intention=="tourneRobot10":
+		elif intention=="demarrer":
 			indice=1
-		elif intention=="tourneRobot_10":
-			indice=2
-		elif intention=="augmenterVitesseRobot":
-			indice=3
-		elif intention=="diminuerVitesseRobot":
-			indice=4
 		elif intention=="tournerGauche":
 			indice=5
 			self.s_turnLeft.start()
@@ -74,24 +60,6 @@ class Controler:
 	def arret(self):
 		self.robot.changerVitesseRoue(0, "LEFT")
 		self.robot.changerVitesseRoue(0, "RIGHT")
-
-	def augmenterVitesseRobot(self):
-		self.robot.changerVitesseSimple(1)
-		
-	def diminuerVitesseRobot(self):
-		self.robot.changerVitesseSimple(-1)
-
-	def tourneRobot(self):
-		self.robot.changerAngle(PI/2)
-
-	def tourneRobot10(self):
-		self.robot.changerAngle(PI/9)
-	
-	def tourneRobot_10(self):
-		self.robot.changerAngle(-PI/9)
-
-	def tracerCarre(self):
-		return
 
 	def speedUp(self):
 		self.robot.changerVitesseRoue(1, "LEFT")
