@@ -52,16 +52,14 @@ class Robot2I013(object):
         :dps: la vitesse cible en nombre de degres par seconde
         """
 
-        try :
-            isinstance(port, int)
-        except Exception as e:
-            print("le port passé doit être un int, ca n'est pas le cas", e)
-        try :
-            isinstance(dps, int)
-        except Exception as e:
-            print("le dps passé doit être un int, ca n'est pas le cas", e)
 
-        print("le moteur " + port + " tourne maintenant à " + dps + " degrès par seconde")
+        if not (isinstance(port, int)):
+            print("le port passé doit être un int, ca n'est pas le cas")
+
+        if not (isinstance(dps, int)):
+            print("le dps passé doit être un int, ca n'est pas le cas")
+
+        print("le moteur " + str(port) + " tourne maintenant à " + str(dps) + " degrès par seconde")
 
 
     def get_motor_position(self):
@@ -81,14 +79,11 @@ class Robot2I013(object):
         Zero the encoder by offsetting it by the current position
         """
         
-        try :
-            isinstance(port, int)
-        except Exception as e:
-            print("le port passé doit être un int, ca n'est pas le cas", e)
-        try :
-            isinstance(offset, int)
-        except Exception as e:
-            print("l'offset passé doit être un int, ca n'est pas le cas", e)
+        if not (isinstance(port, int)):
+            print("le port passé doit être un int, ca n'est pas le cas")
+            
+        if not (isinstance(offset, int)):
+            print("l'offset passé doit être un int, ca n'est pas le cas")
 
         print("l'offset du moteur " + port + " est maintenant fixé à " + offset)
 
@@ -106,13 +101,10 @@ class Robot2I013(object):
         Tourne le servo a l'angle en parametre.
         :param int position: Angle de rotation, de **0** a **180** degres, 90 pour le milieu.
         """
-        try :
-            isinstance(position, int)
-        except Exception as e:
-            print("la position passée doit être un int, ca n'est pas le cas", e)
-        try :
-            (position >= 0) and (position <= 180)
-        except Exception as e:
+        
+        if not(isinstance(position, int)):
+            print("la position passée doit être un int, ca n'est pas le cas")
+        if (position < 0) or (position > 180)
             print("la position passée doit être entre 0 et 180 degrès, ca n'est pas le cas", e)
             
     def stop(self):
