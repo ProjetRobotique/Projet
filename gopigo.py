@@ -1,11 +1,5 @@
 import time
 import math
-from easygopigo3 import EasyGoPiGo3,Servo,DistanceSensor,MotionSensor
-import picamera
-from io import BytesIO
-from PIL import Image
-from di_sensors import distance_sensor as ds_sensor
-from di_sensors import  inertial_measurement_unit as imu
 
 class Robot2I013(object):
     """ 
@@ -124,8 +118,7 @@ class Robot2I013(object):
         self.servo.rotate_servo(position)
     def stop(self):
         """ Arrete le robot """
-        self.set_motor_dps(self.MOTOR_LEFT+self.MOTOR_RIGHT,0)
-        self.set_led(self.LED_LEFT_BLINKER+self.LED_LEFT_EYE+self.LED_LEFT_BLINKER+self.LED_RIGHT_EYE+self.LED_WIFI,0,0,0)
+        print("le robot s'arrete")
 
     def get_image(self):
         stream = BytesIO()
