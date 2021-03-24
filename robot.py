@@ -39,8 +39,8 @@ class Robot:
          for obstacle in ListeObstacle: 
             x,y= obstacle
             if (x==floor(u) and y==floor(v)): 
-               return (x,y)
-      return -1              
+               return sqrt((y-pos[0])**2+(x-pos[1])**2) #calcule de la distance entre le robot et l'obstacle
+      return -1 #retourne -1 si aucun obstacle devant le robot              
       
    def changerVitesseRoue(self, dps, port): #prend en argument le nombre de tours par minutes en plus ou en moins voulus.
       i=-1
