@@ -66,6 +66,7 @@ class StategyTracerCarre:
 
 	def start(self):
 		self.action=0
+		self.tab[self.action].start()
 
 	def stop(self):
 		return self.action>=len(self.tab)
