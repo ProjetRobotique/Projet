@@ -55,7 +55,7 @@ class Fenetre:
 		self.button_arret = Button(self.frame_control, text="arreter", command= lambda: self.control.signal("arret"))
 		self.button_arret.pack()
 
-		self.button_haut = Button(self.frame_control, text="avance", command= self.control.speedUp)
+		self.button_haut = Button(self.frame_control, text="demarrer", command= self.control.speedUp)
 		self.button_haut.pack()
 
 		self.button_gauche = Button(self.frame_control, text="gauche", command= self.control.turnLeft)
