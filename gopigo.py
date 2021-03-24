@@ -26,36 +26,8 @@ class Robot2I013(object):
             :motionPort: port pour l'accelerometre (AD1 ou AD2)
         """
 
-        self._gpg= EasyGoPiGo3()
-        self.controler = controler
-        self.fps=fps
-        self.LED_LEFT_EYE = self._gpg.LED_LEFT_EYE
-        self.LED_RIGHT_EYE = self._gpg.LED_RIGHT_EYE
-        self.LED_LEFT_BLINKER = self._gpg.LED_LEFT_BLINKER
-        self.LED_RIGHT_BLINKER = self._gpg.LED_RIGHT_BLINKER
-        self.LED_WIFI = self._gpg.LED_WIFI
-        self.MOTOR_LEFT= self._gpg.MOTOR_LEFT
-        self.MOTOR_RIGHT = self._gpg.MOTOR_RIGHT
+        print("robot initialisé")
         
-        try:
-            self.camera = picamera.PiCamera()
-            if resolution:
-                self.camera.resolution = resolution
-        except Exception as e:
-            print("Camera not found",e)
-        try:
-            self.servo = Servo(servoPort,self._gpg)
-        except Exception as e:
-            print("Servo not found",e)
-        try:
-            self.distanceSensor = ds_sensor.DistanceSensor()
-        except Exception as e:
-            print("Distance Sensor not found",e)
-        try:
-            self.imu = imu.inertial_measurement_unit()
-        except Exception as e:
-            print("IMU sensor not found",e)
-        self._gpg.set_motor_limits(self._gpg.MOTOR_LEFT+self._gpg.MOTOR_RIGHT,0)
 
     def set_led(self, led, red = 0, green = 0, blue = 0):
         """
@@ -66,11 +38,11 @@ class Robot2I013(object):
         :green:  composante verte (0-255)
         :blue: composante bleu (0-255)
         """
-        self._gpg.set_led(led,red,green,blue)
+        print("la led passée s'allume")
 
     def get_voltage(self):
         """ get the battery voltage """
-        return self._gpg.get_voltage_battery()
+        print("voici le voltage de la batterie")
 
 
     def set_motor_dps(self, port, dps):
@@ -79,8 +51,17 @@ class Robot2I013(object):
         :port: une constante moteur,  MOTOR_LEFT ou MOTOR_RIGHT (ou les deux MOTOR_LEFT+MOTOR_RIGHT).
         :dps: la vitesse cible en nombre de degres par seconde
         """
-        self._gpg.set_motor_dps(port,dps)
-        self.set_motor_limits(port,dps)
+
+        try :
+            isinstance(port, int)
+        except Exception as e:
+            print("le port passé doit être un int, ca n'est pas le cas", e)
+        try :
+            isinstance(dps, int)
+        except Exception as e:
+            print("le dps passé doit être un int, ca n'est pas le cas", e)
+
+        print("le moteur " + port + " tourne maintenant à " + dps + " degrès par seconde")
 
 
     def get_motor_position(self):
@@ -88,7 +69,7 @@ class Robot2I013(object):
         Lit les etats des moteurs en degre.
         :return: couple du  degre de rotation des moteurs
         """
-        return self._gpg.read_encoders()
+        print("voici la position du moteur")
    
     def offset_motor_encoder(self, port, offset):
         """
@@ -99,7 +80,17 @@ class Robot2I013(object):
         :offset: l'offset de decalage en degre.
         Zero the encoder by offsetting it by the current position
         """
-        self._gpg.offset_motor_encoder(port,offset)
+        
+        try :
+            isinstance(port, int)
+        except Exception as e:
+            print("le port passé doit être un int, ca n'est pas le cas", e)
+        try :
+            isinstance(offset, int)
+        except Exception as e:
+            print("l'offset passé doit être un int, ca n'est pas le cas", e)
+
+        print("l'offset du moteur " + port + " est maintenant fixé à " + offset)
 
     def get_distance(self):
         """
@@ -108,22 +99,25 @@ class Robot2I013(object):
             1. L'intervalle est de **5-8,000** millimeters.
             2. Lorsque la valeur est en dehors de l'intervalle, le retour est **8190**.
         """
-        return self.distanceSensor.read_range_single(False)
+        print("voici la distance à l'obstacle")
 
     def servo_rotate(self,position):
         """
         Tourne le servo a l'angle en parametre.
         :param int position: Angle de rotation, de **0** a **180** degres, 90 pour le milieu.
         """
-        self.servo.rotate_servo(position)
+        try :
+            isinstance(position, int)
+        except Exception as e:
+            print("la position passée doit être un int, ca n'est pas le cas", e)
+        try :
+            (position >= 0) and (position <= 180)
+        except Exception as e:
+            print("la position passée doit être entre 0 et 180 degrès, ca n'est pas le cas", e)
+            
     def stop(self):
         """ Arrete le robot """
         print("le robot s'arrete")
 
     def get_image(self):
-        stream = BytesIO()
-        self.camera.capture(stream,format="jpeg")
-        stream.seek(0)
-        img= Image.open(stream).copy()
-        stream.close()
-        return img
+        print("voici l'image")
