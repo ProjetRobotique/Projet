@@ -8,7 +8,7 @@ fps=20
 # programme
 r= Robot([],"Robot")
 c= Controler(r)
-a=Arene(c,r)
+a=Arene(r)
 f= Fenetre(a, c)
 
 threadf= Thread(target=f.boucle, args=(fps,))
