@@ -55,11 +55,10 @@ class Robot2I013(object):
 
         if not (isinstance(port, int)):
             print("le port passé doit être un int, ca n'est pas le cas")
-
-        if not (isinstance(dps, int)):
+        elif not (isinstance(dps, int)):
             print("le dps passé doit être un int, ca n'est pas le cas")
-
-        print("le moteur " + str(port) + " tourne maintenant à " + str(dps) + " degrès par seconde")
+        else:
+            print("le moteur " + str(port) + " tourne maintenant à " + str(dps) + " degrès par seconde")
 
 
     def get_motor_position(self):
@@ -81,11 +80,10 @@ class Robot2I013(object):
         
         if not (isinstance(port, int)):
             print("le port passé doit être un int, ca n'est pas le cas")
-            
-        if not (isinstance(offset, int)):
+        elif not (isinstance(offset, int)):
             print("l'offset passé doit être un int, ca n'est pas le cas")
-
-        print("l'offset du moteur " + port + " est maintenant fixé à " + offset)
+        else :
+            print("l'offset du moteur " + port + " est maintenant fixé à " + offset)
 
     def get_distance(self):
         """
@@ -104,8 +102,10 @@ class Robot2I013(object):
         
         if not(isinstance(position, int)):
             print("la position passée doit être un int, ca n'est pas le cas")
-        if (position < 0) or (position > 180)
+        elif (position < 0) or (position > 180):
             print("la position passée doit être entre 0 et 180 degrès, ca n'est pas le cas", e)
+        else:
+            print("Le robot a maintenant une position de " + str(position))
             
     def stop(self):
         """ Arrete le robot """
