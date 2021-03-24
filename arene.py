@@ -59,9 +59,9 @@ class Arene:
 		elif y<0:
 			y=0
 		# On vérifie s'il y a un obstacle
-		if self.tableau[int(x)][int(y)]!=1:
-			self.tableau[int(self.robot.pos[0])][int(self.robot.pos[1])]=0
-			self.tableau[int(x)][int(y)]=2
+		if self.tableau[int(y)][int(x)]!=1:
+			self.tableau[int(self.robot.pos[1])][int(self.robot.pos[0])]=0
+			self.tableau[int(y)][int(x)]=2
 			self.robot.pos= [x,y]
 
 
