@@ -38,7 +38,7 @@ class Robot:
          v+=0.01*sin(self.angle)
          for obstacle in ListeObstacle: 
             x,y= obstacle
-            if (floor(x)==u and floor(y)==v): 
+            if (x==floor(u) and y==floor(v)): 
                return (x,y)
       return -1              
       
