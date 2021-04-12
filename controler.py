@@ -19,6 +19,16 @@ class Controler(object):
 		self.s_angleTriangle = StrategyTourneGauche(self.robot,60,0)
 		triangleEqui = [self.s_forward, self.s_angleTriangle, self.s_forward, self.s_angleTriangle, self.s_forward, self.s_angleTriangle]
                 self.s_triangleEqui = StrategySequence(self.robot, triangleEqui)
+		
+		self.s_polygone = StrategySequence(sef.robot, polygone(8))
+		
+	def polygone(n):
+		angle = ((n-2)*math.pi)/n
+		tab=[]
+		for i in range(n):
+			tab.append(self.s_forward)
+			tab.append(StrategyTourneGauche(self.robot, angle))
+		return tab
 
 	def boucle(self,fps):
 		while True:
