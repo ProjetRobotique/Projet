@@ -2,7 +2,7 @@
 from robot import Robot
 from math import pi as PI
 import time
-from strategy import StrategyTourneGauche, StrategyAvance, StrategySequence
+from strategy import StrategyTourneGauche, StrategyAvance, StrategySequence, StategyPointille , StrategyTourneN
 
 class Controler(object):
 	def __init__(self, robot):
@@ -15,6 +15,8 @@ class Controler(object):
 		self.s_forward= StrategyAvance(self.robot, 70)
 		carre= [self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward]
 		self.s_carre= StrategySequence(self.robot, carre)
+		self.s_polynome = StrategyTourneN(self.robot,8)
+		self.s_pointille = StategyPointille(self.robot)
 
 
 	def boucle(self,fps):
@@ -57,6 +59,14 @@ class Controler(object):
 			if not self.s_turnRight.stop():
 				self.s_turnRight.run()
 			else: self.tab[action]=0
+		elif action==6:
+			if not self.s_polynome.stop():
+				self.s_polynome.run()
+			else: self.tab[action]=0
+		elif action==7:
+			if not self.s_pointille.stop():
+				self.s_pointille.run()
+			else: self.tab[action]=0	
 
 	def signal(self, intention):
 		print("Signal recu: "+ intention)
@@ -75,6 +85,10 @@ class Controler(object):
 		elif intention=="tournerDroite":
 			indice=3
 			self.s_turnRight.start()
+		elif intention=="polynome":
+			indice=6
+		elif intention =="pointille":
+			indice=7	
 
 		if indice==-1:
 			print("Controler: Erreur indice=-1")
