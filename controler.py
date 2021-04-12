@@ -41,8 +41,6 @@ class Controler(object):
 		elif action==1:
 			if not self.s_forward.stop():
 				if self.s_forward.run()==1:  self.tab[action]=0
-				if self.robot.crayon == 1: self.robot.down()
-				else: self.robot.up()
 			else: self.tab[action]=0
 		# tracer un carre
 		elif action==4:
@@ -59,12 +57,9 @@ class Controler(object):
 			if not self.s_turnRight.stop():
 				self.s_turnRight.run()
 			else: self.tab[action]=0
-				
+
 	def up(self):
                 self.robot.up()
-
-        def down(self):
-                self.robot.down()
 
 	def signal(self, intention):
 		print("Signal recu: "+ intention)
@@ -88,3 +83,6 @@ class Controler(object):
 			print("Controler: Erreur indice=-1")
 		elif self.tab[indice]==0:
 			self.tab[indice]=1
+
+	def down(self):
+                self.robot.down()
