@@ -89,3 +89,4 @@ class StrategySequence:
 
 	def stop(self):
 		return self.action>=len(self.tab)
+
