@@ -65,6 +65,10 @@ class Arene:
 			y=0
 		# On vérifie s'il y a un obstacle
 		if self.tableau[int(y)][int(x)]!=1:
+			if self.robot.crayon==1:
+				self.tableau[int(self.robot.pos[1])] [int(self.robot.pos[0])] = 3
+			else:
+				self.tableau[int(self.robot.pos[1])] [int(self.robot.pos[0])] = 0
 			self.tableau[int(self.robot.pos[1])][int(self.robot.pos[0])]=0
 			self.tableau[int(y)][int(x)]=2
 			self.robot.pos= [x,y]
