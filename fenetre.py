@@ -60,6 +60,9 @@ class Fenetre:
 
 		self.button_forward = Button(self.frame_control, text="Avancer", command=lambda:self.control.signal("avancer"))
 		self.button_forward.pack()
+
+		self.button_forward_crayon = Button(self.frame_control, text="Crayon pointillé", command=lambda:self.control.signal("crayon"))
+		self.button_forward_crayon.pack()
 		
 		self.button_carre = Button(self.frame_control, text="Tracer Carre", command=lambda:self.control.signal("tracerCarre"))
 		self.button_carre.pack()

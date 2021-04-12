@@ -52,6 +52,12 @@ class Robot:
       
    def mapUpdate(self,NouvelleCarte):
       self.map= NouvelleCarte
+
+   def down(self):
+      print("crayon baissé")
+
+   def up(self):
+      print("crayon levé")
   
   
 class Robot_Proxy:

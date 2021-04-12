@@ -89,3 +89,36 @@ class StrategySequence:
 
 	def stop(self):
 		return self.action>=len(self.tab)
+
+
+class StrategyCrayon:
+	def __init__(self, robot, distance):
+		self.robot= robot
+		self.distance= distance
+		self.distanceCourant=0
+		self.appelTime= 0
+	
+	def run(self):
+		d=self.robot.get_distance()
+		if d<3 and d>=0:
+			print("Trop près")
+			self.robot.stop()
+			return 1
+		temps= time.time()- self.appelTime
+		rayonRoue= self.robot.WHEEL_DIAMETER /2
+		self.robot.set_motor_dps(3, 90)
+		if self.appelTime!=0:
+			self.distanceCourant+=(math.pi*min(self.robot.vitesse_roue[0], self.robot.vitesse_roue[1] *rayonRoue*temps))/(180.0)
+		self.appelTime = time.time()
+		return 0
+	
+	def start(self):
+		self.distanceCourant=0
+		self.appelTime=0
+
+
+	def stop(self):
+		if self.distanceCourant>= self.distance:
+			self.robot.stop()
+			return True
+		return False

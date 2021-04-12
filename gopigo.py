@@ -113,3 +113,9 @@ class Robot2I013(object):
 
     def get_image(self):
         print("voici l'image")
+
+    def down(self):
+        print("le robot baisse le crayon")
+
+    def up(self):
+        print("le robot lève le crayon")

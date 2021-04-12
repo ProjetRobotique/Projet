@@ -13,6 +13,7 @@ class Controler(object):
 		self.s_turnLeft= StrategyTourneGauche(self.robot, 90, 0)
 		self.s_turnRight= StrategyTourneGauche(self.robot, 90, 1)
 		self.s_forward= StrategyAvance(self.robot, 70)
+		self.s_crayon=StrategyCrayon(self.robot, 70)
 		carre= [self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward]
 		self.s_carre= StrategySequence(self.robot, carre)
 
@@ -57,6 +58,11 @@ class Controler(object):
 			if not self.s_turnRight.stop():
 				self.s_turnRight.run()
 			else: self.tab[action]=0
+		# Crayon
+		elif action==6:
+			if not self.s_crayon.stop():
+				self.s_crayon.run()
+			else: self.tab[action]=0
 
 	def signal(self, intention):
 		print("Signal recu: "+ intention)
@@ -75,6 +81,9 @@ class Controler(object):
 		elif intention=="tournerDroite":
 			indice=3
 			self.s_turnRight.start()
+		elif intention=="crayon":
+			indice=6
+			self.s_crayon.start()
 
 		if indice==-1:
 			print("Controler: Erreur indice=-1")
