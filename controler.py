@@ -16,13 +16,22 @@ class Controler(object):
 		carre= [self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward]
 		self.s_carre= StrategySequence(self.robot, carre)
 		#Exercice 2 tme solo
+		#Q2.1
 		self.turn = StrategyTourneGauche(self.robot, 60, 0)
 		self.avance = StrategyAvance(self.robot, d_cote)
 		triangle_equilateral = [self.avance, self.turn, self.avance, self.turn, self.avance]
 		self.t_equilateral= StrategySequence(self.robot, triangle_equilateral)
+		#Q2.2
+		self.turn2 = StrategyTourneGauche(self.robot, angle, 0)
+		self.avance2 = StrategyAvance(self.robot, d_cote)
+		polygone = []
+		polygone.append("self.avance2")
+		for i in range n-1:
+			polygone.append("self.turn2")
+			polygone.append("self.avance2")
+		self.polygone = StrategySequence(self.robot, polygone)
 		
-		
-
+	
 
 	def boucle(self,fps):
 		while True:
