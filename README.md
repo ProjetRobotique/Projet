@@ -16,3 +16,9 @@ qui alterne les 2 fonctions precedente entre chaque run .
 
 
 Exercice 2:
+
+Q 2.1
+
+Q 2.2
+
+Q 2.3
