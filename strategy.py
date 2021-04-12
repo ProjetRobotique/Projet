@@ -97,6 +97,7 @@ class StrategyCrayon:
 		self.distance= distance
 		self.distanceCourant=0
 		self.appelTime= 0
+		self.crayon = "up"
 	
 	def run(self):
 		d=self.robot.get_distance()
@@ -104,6 +105,14 @@ class StrategyCrayon:
 			print("Trop près")
 			self.robot.stop()
 			return 1
+		if (self.crayon == "up"):
+			self.robot.down()
+			self.crayon="down"
+			time.sleep(0.5)
+		else :
+			self.robot.up()
+			self.crayon="up"
+			time.sleep(0.5)
 		temps= time.time()- self.appelTime
 		rayonRoue= self.robot.WHEEL_DIAMETER /2
 		self.robot.set_motor_dps(3, 90)

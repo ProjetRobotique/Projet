@@ -2,7 +2,7 @@
 from robot import Robot
 from math import pi as PI
 import time
-from strategy import StrategyTourneGauche, StrategyAvance, StrategySequence
+from strategy import *
 
 class Controler(object):
 	def __init__(self, robot):
