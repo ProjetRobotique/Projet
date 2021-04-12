@@ -106,6 +106,12 @@ class Robot2I013(object):
             print("la position passée doit être entre 0 et 180 degrès, ca n'est pas le cas", e)
         else:
             print("Le robot a maintenant une position de " + str(position))
+
+    def up(self):
+    	return
+    	
+    def down(self):
+    	return
             
     def stop(self):
         """ Arrete le robot """
@@ -113,3 +119,4 @@ class Robot2I013(object):
 
     def get_image(self):
         print("voici l'image")
+
