@@ -57,6 +57,12 @@ class Controler(object):
 			if not self.s_turnRight.stop():
 				self.s_turnRight.run()
 			else: self.tab[action]=0
+				
+	def up(self):
+                self.robot.up()
+
+        def down(self):
+                self.robot.down()
 
 	def signal(self, intention):
 		print("Signal recu: "+ intention)
