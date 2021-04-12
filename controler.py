@@ -80,3 +80,9 @@ class Controler(object):
 			print("Controler: Erreur indice=-1")
 		elif self.tab[indice]==0:
 			self.tab[indice]=1
+
+			def up(self):
+		self.robot.up()
+		
+	def down(self):
+		self.robot.down()
