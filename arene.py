@@ -51,7 +51,7 @@ class Arene:
 		# Calcule de l'angle du Robot
 		self.angle= (self.angle+((rayonRoue*vitesse_tourne*1.0*(time.time()-self.ts))/(rayonRobot)))%360
 		self.robot.angle= self.angle
-		self.ts=time.time() 
+		self.ts=time.time()
 
 		# On vérifie si le robot sort du tableau en abscisse
 		if x>=TAILLE_ARENE_X:
@@ -65,6 +65,13 @@ class Arene:
 			y=0
 		# On vérifie s'il y a un obstacle
 		if self.tableau[int(y)][int(x)]!=1:
+                        # Le crayon du robot trace le trajet
+			if self.robot.crayon==1:
+				self.tableau[int(self.robot.pos[1])][int(self.robot.pos[0])]=3
+			else:
+				self.tableau[int(self.robot.pos[1])][int(self.robot.pos[0])]=0
+				
 			self.tableau[int(self.robot.pos[1])][int(self.robot.pos[0])]=0
 			self.tableau[int(y)][int(x)]=2
 			self.robot.pos= [x,y]
+
