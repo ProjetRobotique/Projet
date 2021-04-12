@@ -86,7 +86,7 @@ class Controler(object):
 		elif intention=="tournerDroite":
 			indice=3
 			self.s_turnRight.start()
-		elif intention=="triangle":
+		elif intention=="tracerTriangle":
                         indice=2
                         self.s_triangleEqui.start()
 
