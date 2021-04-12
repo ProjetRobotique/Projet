@@ -80,7 +80,7 @@ class Fenetre:
 		self.button_quit.pack(side=RIGHT)
 
 		# les 2 couleurs à utiliser
-		self.couleurs = {0: "white", 1: "#41B77F", 2: "red", 3: "blue"}
+		self.couleurs = {0: "white", 1: "#41B77F", 2: "red", 3: "blue", 4:"green"}
 
 		# dimensions du canevas
 		self.can_width = 620
