@@ -1,1 +1,10 @@
-Pour l'exercice 2 j'ai creedes strategy dans strategy.py mais je suis pas surque celamarche alors on peut aussi les fairecomme je l'ai mis dans controller.
+Exercice 1:
+Creation d'un attribut crayon dans robot.py et une methode up et down qui change l'etat de l'attribut
+Creation de methode up et down dans gopigo.py
+Creation du changement de couleur selon l'attribut crayon dans arene (pour tracer le trait)
+Ajout d'une couleur 3:pink dans fenetre.py
+
+Exercice 2:
+creation de strategy Triangle et polynome dans strategy.py
+Je ne suis pas sur de l'écriture de ces strategies alors j'ai cree dans controler ces strategies de la meme facon que carré avait été fait, 
+ces strategies s'active avec l'acion 6 et 7 dans la fonction update.
