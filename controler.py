@@ -2,7 +2,7 @@
 from robot import Robot
 from math import pi as PI
 import time
-from strategy import StrategyTourneGauche, StrategyAvance, StrategySequence, StategyPointille , StrategyTourneN
+from strategy import StrategyTourneGauche, StrategyAvance, StrategySequence, StategyPointille , StrategyTourneN, StrategyTourne60
 
 class Controler(object):
 	def __init__(self, robot):
@@ -12,9 +12,13 @@ class Controler(object):
 		self.actionCourant=-1
 		self.s_turnLeft= StrategyTourneGauche(self.robot, 90, 0)
 		self.s_turnRight= StrategyTourneGauche(self.robot, 90, 1)
+		self.s_turn60 = StrategyTourne60(robot)
 		self.s_forward= StrategyAvance(self.robot, 70)
 		carre= [self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward]
+		triangle= [self.s_forward, self.s_turn60, self.s_forward, self.s_turn60, self.s_forward, self.s_turn60]
 		self.s_carre= StrategySequence(self.robot, carre)
+		self.s_triangle= StrategySequence(self.robot, triangle)
+		
 		self.s_polynome = StrategyTourneN(self.robot,8)
 		self.s_pointille = StategyPointille(self.robot)
 
@@ -61,7 +65,7 @@ class Controler(object):
 			else: self.tab[action]=0
 		elif action==6:
 			if not self.s_polynome.stop():
-				self.s_polynome.run()
+				self.s_polynome.run(fps)
 			else: self.tab[action]=0
 		elif action==7:
 			if not self.s_pointille.stop():
