@@ -98,7 +98,8 @@ class StrategyTriangleEquilateral:
 	def run():
 		self.turn = StrategyTourneGauche(self.robot, 60, 0)
 		self.avance = StrategyAvance(self.robot, d_cote)
-		
+		triangle_equilateral = [self.avance, self.turn, self.avance, self.turn, self.avance]
+		self.t_equilateral= StrategySequence(self.robot, triangle_equilateral)
 		
 	def start(self):
 		self.angleCourant=0
