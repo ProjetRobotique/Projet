@@ -63,6 +63,9 @@ class Fenetre:
 		
 		self.button_carre = Button(self.frame_control, text="Tracer Carre", command=lambda:self.control.signal("tracerCarre"))
 		self.button_carre.pack()
+		
+		self.button_triangle = Button(self.frame_control, text="Tracer Triangle", command=lambda:self.control.signal("tracerTriangle"))
+		self.button_triangle.pack()
 
 		self.button_d = Button(self.frame_control, text="distance", command=lambda:self.arene.robot.get_distance())
 		self.button_d.pack()
