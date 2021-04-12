@@ -106,7 +106,7 @@ class StrategyPolygone:
 	def __init__(self, robot, nombre_de_cote, distance_cote):
 		self.robot = robot
 		self.n = nombre_de_cote
-		self.pi = 3.1415926535  # Mieux s'importer le nombre pi exact au lieu de l'ecrire avec des decimales 
+		self.pi = math.pi 
 		self.angle = ((n-2)*pi)/n
 		self.d_cote = distance_cote
 	
