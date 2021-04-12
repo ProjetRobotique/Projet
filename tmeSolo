@@ -1,0 +1,11 @@
+TME Solo
+
+Exercice 1
+Q.1. Ajout de méthode up() et down() dans Robot, Gopigo, ainsi que Controler. Crayon devient un attribut de robot avec comme valeur 0 ou 1. Modification de l'arène quand le
+crayon est baissé (valeur 1) dans Arène. Dans Fenêtre, ajout de la couleur jaune quand une case de l'arene vaut 3.
+Q.2. Dans Controler, quand le robot avance, si le crayon est levé il se baisse et inversement pour créer les pointillés dans la fenêtre graphique.
+
+Exercice 2
+Q.1. Changement de Controler, ajout d'un signal, ainsi que d'une action. Dans Fenêtre, ajout d'un bouton pour tracer un triangle avec le robot.
+
+Q.2.
