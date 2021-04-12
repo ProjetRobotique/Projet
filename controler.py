@@ -63,6 +63,14 @@ class Controler(object):
 			if not self.s_carre.stop():
 				self.s_carre.run()
 			else: self.tab[action]=0
+		#Tracer un triangle equilateral
+		elif action == 6:
+			self.t_equilateral.run()
+			self.tab[action]=0
+		#Tracer un polygone 
+		elif action == 7:
+			self.polygone.run()
+			self.tab[action]=0
 		# Tourner Gauche
 		elif action==5:
 			if not self.s_turnLeft.stop():
