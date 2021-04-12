@@ -15,7 +15,10 @@ class Controler(object):
 		self.s_forward= StrategyAvance(self.robot, 70)
 		carre= [self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward]
 		self.s_carre= StrategySequence(self.robot, carre)
-
+		
+		self.s_angleTriangle = StrategyTourneGauche(self.robot,60,0)
+		triangleEqui = [self.s_forward, self.s_angleTriangle, self.s_forward, self.s_angleTriangle, self.s_forward, self.s_angleTriangle]
+                self.s_triangleEqui = StrategySequence(self.robot, triangleEqui)
 
 	def boucle(self,fps):
 		while True:
@@ -86,3 +89,4 @@ class Controler(object):
 
 	def down(self):
                 self.robot.down()
+
