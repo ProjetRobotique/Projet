@@ -14,6 +14,7 @@ class Controler(object):
 		self.s_turnRight= StrategyTourneGauche(self.robot, 90, 1)
 		self.s_forward= StrategyAvance(self.robot, 70)
 		self.s_crayon=StrategyCrayon(self.robot, 70)
+		self.s_turn60=StrategyTourneGauche(self.robot, 120, 0)
 		carre= [self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward]
 		self.s_carre= StrategySequence(self.robot, carre)
 		triangle=[self.s_forward, self.s_turn60, self.s_forward, self.s_turn60, self.s_forward]
@@ -45,7 +46,7 @@ class Controler(object):
 				if self.s_forward.run()==1:  self.tab[action]=0
 			else: self.tab[action]=0
 		# tracer un carre
-		elif action==4:
+		elif action==7:
 			if not self.s_carre.stop():
 				self.s_carre.run()
 			else: self.tab[action]=0
@@ -65,7 +66,7 @@ class Controler(object):
 				self.s_crayon.run()
 			else: self.tab[action]=0
 		# Triangle
-		elif action==7:
+		elif action==4:
 			if not self.s_triangle.stop():
 				self.s_triangle.run()
 			else: self.tab[action]=0
@@ -78,9 +79,6 @@ class Controler(object):
 		elif intention=="avancer":
 			indice=1
 			self.s_forward.start()
-		elif intention=="tracerCarre":
-			indice=4
-			self.s_carre.start()
 		elif intention=="tournerGauche":
 			indice=5
 			self.s_turnLeft.start()
@@ -90,8 +88,8 @@ class Controler(object):
 		elif intention=="crayon":
 			indice=6
 			self.s_crayon.start()
-		elif intention=="triangle":
-			indice=7
+		elif intention=="tri":
+			indice=4
 			self.s_triangle.start()
 
 		if indice==-1:
