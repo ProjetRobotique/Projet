@@ -1,6 +1,18 @@
-# Projet
+# TME-solo
 
-Tout le code du projet
+Exercice 1:
 
-Trello:
-https://trello.com/b/2DAld893/lu2in013
+Q 1.1
+
+Ajout des fonctions :
+crayon_baisser(robot):
+crayon_lever(robot):
+dans strategie
+
+Q 1.2 
+
+Création de la class StrategiePointille dans Strategie.
+qui alterne les 2 fonctions precedente entre chaque run .
+
+
+Exercice 2:
