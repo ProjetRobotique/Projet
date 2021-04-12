@@ -13,10 +13,15 @@ class Controler(object):
 		self.s_turnLeft= StrategyTourneGauche(self.robot, 90, 0)
 		self.s_turnRight= StrategyTourneGauche(self.robot, 90, 1)
 		self.s_forward= StrategyAvance(self.robot, 70)
+		# Tracer carre
 		carre= [self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward]
 		self.s_carre= StrategySequence(self.robot, carre)
-
-
+		
+		# Tracer triangle equilatéral
+		self.s_t= StrategyTourneGauche(self.robot, 120, 1)
+		triangle= [self.s_forward, self.s_t, self.s_forward, self.s_t, self.s_forward, self.s_t]
+		self.s_triangle= StrategySequence(self.robot, triangle)
+		
 	def boucle(self,fps):
 		while True:
 			if self.exit:
@@ -57,6 +62,11 @@ class Controler(object):
 			if not self.s_turnRight.stop():
 				self.s_turnRight.run()
 			else: self.tab[action]=0
+		# Triangle
+		elif action==2:
+			if not self.s_triangle.stop():
+				self.s_triangle.run()
+			else: self.tab[action]=0
 			
 	def up(self):
 		self.robot.up()
@@ -81,6 +91,8 @@ class Controler(object):
 		elif intention=="tournerDroite":
 			indice=3
 			self.s_turnRight.start()
+		elif intention=="triangle eq":
+			indice=2
 
 		if indice==-1:
 			print("Controler: Erreur indice=-1")

@@ -70,8 +70,8 @@ class Fenetre:
 		self.button_down = Button(self.frame_control, text="down", command=lambda:self.control.down())
 		self.button_down.pack()
 		
-		self.button_d = Button(self.frame_control, text="distance", command=lambda:self.arene.robot.get8distance())
-		self.button_d.pack()
+		self.button_t = Button(self.frame_control, text="triangle equilateral", command=lambda:self.control.signal("triangle eq"))
+		self.button_t.pack()
 		
 		self.button_quit = Button(self.init_window, text="cliquer pour quitter", command=self.quit)
 		self.button_quit.pack(side=RIGHT)
