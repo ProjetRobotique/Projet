@@ -7,6 +7,12 @@ class Robot:
    MOTOR_LEFT=1
    MOTOR_RIGHT=2
    
+   def up(self):
+   	self.crayon=1
+   
+   def down(self):
+   	self.crayon=0
+   
    def __init__(self,carte):
       self.map = carte #le robot recupere la grille
       self.vitesse = 0.0
