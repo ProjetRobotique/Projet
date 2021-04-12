@@ -60,6 +60,11 @@ class Controler(object):
 			if not self.s_turnRight.stop():
 				self.s_turnRight.run()
 			else: self.tab[action]=0
+		#Tracer un triangle equilateral
+		elif action==2:
+                        if not self.s_triangleEqui.stop():
+                                self.s_triangleEqui.run()
+                        else : self.tab[action]=0
 
 	def up(self):
                 self.robot.up()
@@ -81,6 +86,9 @@ class Controler(object):
 		elif intention=="tournerDroite":
 			indice=3
 			self.s_turnRight.start()
+		elif intention=="triangle":
+                        indice=2
+                        self.s_triangleEqui.start()
 
 		if indice==-1:
 			print("Controler: Erreur indice=-1")
@@ -89,4 +97,5 @@ class Controler(object):
 
 	def down(self):
                 self.robot.down()
+
 
