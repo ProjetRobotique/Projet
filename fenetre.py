@@ -73,6 +73,9 @@ class Fenetre:
 		self.button_t = Button(self.frame_control, text="triangle equilateral", command=lambda:self.control.signal("triangle eq"))
 		self.button_t.pack()
 		
+		self.button_p = Button(self.frame_control, text="polygone", command=lambda:self.control.signal("poly"))
+		self.button_p.pack()
+		
 		self.button_quit = Button(self.init_window, text="cliquer pour quitter", command=self.quit)
 		self.button_quit.pack(side=RIGHT)
 

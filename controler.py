@@ -8,7 +8,7 @@ class Controler(object):
 	def __init__(self, robot):
 		self.exit=False
 		self.robot= robot
-		self.tab=[0 for i in range(7)]
+		self.tab=[0 for i in range(8)]
 		self.actionCourant=-1
 		self.s_turnLeft= StrategyTourneGauche(self.robot, 90, 0)
 		self.s_turnRight= StrategyTourneGauche(self.robot, 90, 1)
@@ -21,6 +21,9 @@ class Controler(object):
 		self.s_t= StrategyTourneGauche(self.robot, 120, 1)
 		triangle= [self.s_forward, self.s_t, self.s_forward, self.s_t, self.s_forward, self.s_t]
 		self.s_triangle= StrategySequence(self.robot, triangle)
+		
+		#polygone 8 cote
+		self.s_poly= StrategySequence(self.robot, self.polygone(8))
 		
 	def boucle(self,fps):
 		while True:
@@ -67,12 +70,28 @@ class Controler(object):
 			if not self.s_triangle.stop():
 				self.s_triangle.run()
 			else: self.tab[action]=0
+		# Polygone
+		elif action==6:
+			if not self.s_poly.stop():
+				self.s_poly.run()
+			else: self.tab[action]=0
 			
 	def up(self):
 		self.robot.up()
 		
 	def down(self):
 		self.robot.down()
+		
+	def polygone(self, n):
+		tab=[]
+		angle= (n-2.)*PI/n
+		print(angle)
+		s_turn= StrategyTourneGauche(self.robot, 180-(angle*180/PI) , 1)
+		s_forward= StrategyAvance(self.robot, 50)
+		for i in range(n):
+			tab.append(s_forward)
+			tab.append(s_turn)
+		return tab
 
 	def signal(self, intention):
 		print("Signal recu: "+ intention)
@@ -92,7 +111,11 @@ class Controler(object):
 			indice=3
 			self.s_turnRight.start()
 		elif intention=="triangle eq":
+			self.s_triangle.start()
 			indice=2
+		elif intention=="poly":
+			self.s_poly.start()
+			indice=6
 
 		if indice==-1:
 			print("Controler: Erreur indice=-1")
