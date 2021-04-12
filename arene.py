@@ -51,7 +51,7 @@ class Arene:
 		# Calcule de l'angle du Robot
 		self.angle= (self.angle+((rayonRoue*vitesse_tourne*1.0*(time.time()-self.ts))/(rayonRobot)))%360
 		self.robot.angle= self.angle
-		self.ts=time.time()
+		self.ts=time.time() 
 
 		# On vérifie si le robot sort du tableau en abscisse
 		if x>=TAILLE_ARENE_X:
