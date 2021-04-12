@@ -55,10 +55,10 @@ class Robot:
       self.map= NouvelleCarte
       
    def up(self):
-   	self.crayon=1
+   	self.crayon=0
    
    def down(self):
-   	self.crayon=0
+   	self.crayon=1
   
   
 class Robot_Proxy:
@@ -76,11 +76,11 @@ class Robot_Proxy:
       self.crayon= 0
       
    def up(self):
-   	self.crayon=1
+   	self.crayon=0
    	self.robot.up()
    
    def down(self):
-   	self.crayon=0
+   	self.crayon=1
    	self.robot.down()
    	
 

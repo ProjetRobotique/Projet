@@ -63,7 +63,13 @@ class Fenetre:
 		
 		self.button_carre = Button(self.frame_control, text="Tracer Carre", command=lambda:self.control.signal("tracerCarre"))
 		self.button_carre.pack()
-
+		
+		self.button_up = Button(self.frame_control, text="up", command=lambda:self.control.up())
+		self.button_up.pack()
+		
+		self.button_down = Button(self.frame_control, text="down", command=lambda:self.control.down())
+		self.button_down.pack()
+		
 		self.button_d = Button(self.frame_control, text="distance", command=lambda:self.arene.robot.get8distance())
 		self.button_d.pack()
 		
@@ -71,7 +77,7 @@ class Fenetre:
 		self.button_quit.pack(side=RIGHT)
 
 		# les 2 couleurs à utiliser
-		self.couleurs = {0: "white", 1: "#41B77F", 2: "red"}
+		self.couleurs = {0: "white", 1: "#41B77F", 2: "red", 3: "blue"}
 
 		# dimensions du canevas
 		self.can_width = 620

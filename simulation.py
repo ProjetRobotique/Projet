@@ -7,14 +7,17 @@ import time
 
 r=0
 fps=20
-"""
+
 try:
+	print("robot reel")
 	from robot2I013 import Robot2I013
 	r= Robot2I013()
 except:
+	print("gopigo")
 	from gopigo import Robot2I013
 	from robot import Robot_Proxy
-	r= Robot_Proxy([], Robot2I013())"""
+	r= Robot_Proxy([], Robot2I013())
+
 r= Robot([])
 c= Controler(r)
 a=Arene(r)
