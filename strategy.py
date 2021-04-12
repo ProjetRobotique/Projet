@@ -90,3 +90,21 @@ class StrategySequence:
 	def stop(self):
 		return self.action>=len(self.tab)
 
+class StrategyTriangleEquilateral:
+	def __init__(self, robot, distance_cote):
+		self.robot= robot
+		self.d_cote= distance_cote
+		
+	def run():
+		self.turn = StrategyTourneGauche(self.robot, 60, 0)
+		self.avance = StrategyAvance(self.robot, d_cote)
+		
+		
+	def start(self):
+		self.angleCourant=0
+		self.appelTime=0
+		
+	def stop(self):
+		print("le robot a tracé un triangle équilatéral")
+		
+	
