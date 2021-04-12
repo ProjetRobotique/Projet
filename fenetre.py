@@ -64,7 +64,7 @@ class Fenetre:
 		self.button_carre = Button(self.frame_control, text="Tracer Carre", command=lambda:self.control.signal("tracerCarre"))
 		self.button_carre.pack()
 
-		self.button_d = Button(self.frame_control, text="distance", command=lambda:self.arene.robot.get8distance())
+		self.button_d = Button(self.frame_control, text="distance", command=lambda:self.arene.robot.get_distance())
 		self.button_d.pack()
 		
 		self.button_quit = Button(self.init_window, text="cliquer pour quitter", command=self.quit)
@@ -115,6 +115,11 @@ class Fenetre:
 			self.arene.tableau[pos_x][pos_y] = 1
 		else:
 			self.arene.tableau[pos_x][pos_y] = 0
+		#affichage des pointillés
+		if self.robot.crayon == 1:
+                        self.arene.tableau[self.robot.pos[0]][self.robot.pos[1]] = 3
+                else:
+                        self.arene.tableau[self.robot.pos[0]][self.robot.pos[1]] = 0
 
 	def boucle(self,fps):
 		while True:
@@ -135,5 +140,6 @@ class Fenetre:
 		self.control.exit=True
 		time.sleep(0.5)
 		self.init_window.destroy()
+
 
 
