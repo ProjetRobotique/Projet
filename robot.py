@@ -19,6 +19,7 @@ class Robot:
       self.pos = [0.0,0.0]
       self.angle = 0
       self.vitesse_roue=[0,0] # En degre par seconde
+      self.crayon=0
       
    def get_distance(self):
       ListeObstacle=[]
