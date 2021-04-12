@@ -16,7 +16,8 @@ class Controler(object):
 		self.s_crayon=StrategyCrayon(self.robot, 70)
 		carre= [self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward]
 		self.s_carre= StrategySequence(self.robot, carre)
-
+		triangle=[self.s_forward, self.s_turn60, self.s_forward, self.s_turn60, self.s_forward]
+		self.s_triangle=StrategySequence(self.robot, triangle)
 
 	def boucle(self,fps):
 		while True:
@@ -63,6 +64,11 @@ class Controler(object):
 			if not self.s_crayon.stop():
 				self.s_crayon.run()
 			else: self.tab[action]=0
+		# Triangle
+		elif action==7:
+			if not self.s_triangle.stop():
+				self.s_triangle.run()
+			else: self.tab[action]=0
 
 	def signal(self, intention):
 		print("Signal recu: "+ intention)
@@ -84,6 +90,9 @@ class Controler(object):
 		elif intention=="crayon":
 			indice=6
 			self.s_crayon.start()
+		elif intention=="triangle":
+			indice=7
+			self.s_triangle.start()
 
 		if indice==-1:
 			print("Controler: Erreur indice=-1")
