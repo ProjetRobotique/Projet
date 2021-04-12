@@ -13,6 +13,7 @@ class Robot:
       self.pos = [0.0,0.0]
       self.angle = 0
       self.vitesse_roue=[0,0] # En degre par seconde
+      self.crayon=0
       
    def get_distance(self):
       ListeObstacle=[]
@@ -52,6 +53,12 @@ class Robot:
       
    def mapUpdate(self,NouvelleCarte):
       self.map= NouvelleCarte
+      
+   def up(self):
+   	self.crayon=1
+   
+   def down(self):
+   	self.crayon=0
   
   
 class Robot_Proxy:
@@ -66,6 +73,16 @@ class Robot_Proxy:
       self.angle = 0
       self.vitesse_roue=[0,0] # En degre par seconde
       self.robot= robot
+      self.crayon= 0
+      
+   def up(self):
+   	self.crayon=1
+   	self.robot.up()
+   
+   def down(self):
+   	self.crayon=0
+   	self.robot.down()
+   	
 
    def set_motor_dps(self, port, dps): #prend en argument le nombre de tours par minutes en plus ou en moins voulus.
       if port==self.MOTOR_LEFT:
