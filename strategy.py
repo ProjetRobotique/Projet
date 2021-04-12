@@ -92,8 +92,8 @@ class StrategySequence:
 
 class StrategyTriangleEquilateral:
 	def __init__(self, robot, distance_cote):
-		self.robot= robot
-		self.d_cote= distance_cote
+		self.robot = robot
+		self.d_cote = distance_cote
 		
 	def run():
 		self.turn = StrategyTourneGauche(self.robot, 60, 0)
@@ -101,11 +101,22 @@ class StrategyTriangleEquilateral:
 		triangle_equilateral = [self.avance, self.turn, self.avance, self.turn, self.avance]
 		self.t_equilateral= StrategySequence(self.robot, triangle_equilateral)
 		
-	def start(self):
-		self.angleCourant=0
-		self.appelTime=0
 		
-	def stop(self):
-		print("le robot a tracé un triangle équilatéral")
-		
+class StrategyPolygone:
+	def __init__(self, robot, nombre_de_cote, distance_cote):
+		self.robot = robot
+		self.n = nombre_de_cote
+		self.pi = 3.1415926535  # Mieux s'importer le nombre pi exact au lieu de l'ecrire avec des decimales 
+		self.angle = ((n-2)*pi)/n
+		self.d_cote = distance_cote
+	
+	def run():
+		self.turn = StrategyTourneGauche(self.robot, angle, 0)
+		self.avance = StrategyAvance(self.robot, d_cote)
+		polygone = []
+		polygone.append("self.avance")
+		for i in range n-1:
+			polygone.append("self.turn")
+			polygone.append("self.avance")
+		self.polygone = StrategySequence(self.robot, polygone)
 	
