@@ -111,5 +111,11 @@ class Robot2I013(object):
         """ Arrete le robot """
         print("le robot s'arrete")
 
+    def up(self):
+    	return
+    	
+    def down(self):
+    	return        
+
     def get_image(self):
         print("voici l'image")
