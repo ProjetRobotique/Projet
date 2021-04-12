@@ -15,6 +15,13 @@ class Controler(object):
 		self.s_forward= StrategyAvance(self.robot, 70)
 		carre= [self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward]
 		self.s_carre= StrategySequence(self.robot, carre)
+		#Exercice 2 tme solo
+		self.turn = StrategyTourneGauche(self.robot, 60, 0)
+		self.avance = StrategyAvance(self.robot, d_cote)
+		triangle_equilateral = [self.avance, self.turn, self.avance, self.turn, self.avance]
+		self.t_equilateral= StrategySequence(self.robot, triangle_equilateral)
+		
+		
 
 
 	def boucle(self,fps):
