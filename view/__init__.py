@@ -1,0 +1,1 @@
+from view3D import MyApp
