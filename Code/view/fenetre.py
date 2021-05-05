@@ -13,7 +13,7 @@ from ..arene import Arene
 from .view3D import MyApp
 
 class Fenetre:
-	def __init__(self, arene, control):
+	def __init__(self, arene, control, fps):
 		# Ajout de l'arene
 		self.arene= arene
 		# En marche
@@ -97,6 +97,8 @@ class Fenetre:
 				L.append(self.can.create_rectangle(i * self.size, j * self.size , i * self.size + self.size, j * self.size + self.size, fill = self.couleurs[self.arene.tableau[i][j]]))
 			self.grille_affiche.append(L)
 
+		self.init_window.after(int((1./fps)*1000), self.updateFenetre)
+
 
 	def afficher(self):
 		"""
@@ -120,18 +122,12 @@ class Fenetre:
 		else:
 			self.arene.tableau[pos_x][pos_y] = 0
 
-	def boucle(self,fps):
-		while True:
-			if self.exit:
-				break
-			self.updateFenetre()
-			time.sleep(1./fps)
-
 	def updateFenetre(self):
 		self.afficher()
 		self.label_pos.configure(text="position: "+str(self.arene.robot.pos))
 		self.label_angle.configure(text="angle: "+str(self.arene.robot.angle))
 		self.label_vitesse_roue.configure(text="vitesse roues: "+str(self.robot.vitesse_roue))
+		self.init_window.after(50, self.updateFenetre)
 
 	def quit(self):
 		self.exit=True
@@ -143,7 +139,7 @@ class Fenetre:
 
 
 class Frame_Cam(ttk.Frame):
-    def __init__(self, parent, arene):
+    def __init__(self, parent, arene, fps):
     
         ttk.Frame.__init__(self, parent)
         self.app = parent
@@ -154,15 +150,14 @@ class Frame_Cam(ttk.Frame):
         self.ives = ttk.Frame(parent)  # add a frame to the canvas
         self.ives.pack()
     
-        self.launch_panda3d_app()  # launch panda3d app
+        self.launch_panda3d_app(fps)  # launch panda3d app
 
-    def launch_panda3d_app(self):
-
+    def launch_panda3d_app(self, fps):
         # this is in case someone tries to launch a second panda3d app
         try: base.destroy()
         except NameError: pass
     
-        self.app3d = MyApp(self.arene, self.ives)
+        self.app3d = MyApp(self.arene, self.ives, fps)
         
         try:
             self.app3d.run()

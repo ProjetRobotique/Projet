@@ -38,7 +38,7 @@ class MyApp(ShowBase):
 		for y in range(len(self.arene.tableau)):
 			L=[];
 			for x in range(len(self.arene.tableau[0])):
-				if self.arene.tableau[y][x]==1:
+				if self.arene.tableau[x][y]==1:
 					tmp= CubeMaker(0.5).generate()
 					tmp;setPos(self.cube, x, -y, 0.0)
 					tmp.reparentTo(render)
@@ -112,20 +112,20 @@ class MyApp(ShowBase):
 
 	# update la vision de la camera
 	def update(self, task):
+		# camera Robot
+		self.cam.setPos(self.cube, self.arene.robot.pos[0], -self.arene.robot.pos[1], 0.5)
+		self.cam.setHpr(90-self.arene.angle, 0.0, 0.0)
+		# Obstacle
 		for y in range(len(self.arene.tableau)):
 			for x in range(len(self.arene.tableau[0])):
-				# Robot
-				if  self.arene.tableau[y][x]==2:
-					self.cam.setPos(self.cube, x, -y, 0.5)
-					self.cam.setHpr(self.arene.angle, 0.0, 0.0)
 				# Obstacle nouveau
-				elif self.arene.tableau[y][x]==1 and self.arene3D[y][x]==0:
-					self.arene3D[y][x]= CubeMaker(0.5).generate()
-					self.arene3D[y][x].setPos(self.cube, x, -y, 0.0)
-					self.arene3D[y][x].reparentTo(render)
+				if self.arene.tableau[x][y]==1 and self.arene3D[x][y]==0:
+					self.arene3D[x][y]= CubeMaker(0.5).generate()
+					self.arene3D[x][y].setPos(self.cube, x, -y, 0.0)
+					self.arene3D[x][y].reparentTo(render)
 				# Obstacle detruit
-				elif self.arene.tableau[y][x]==0 and self.arene3D[y][x]!=0:
-					self.arene3D[y][x].destroy()
-					self.arene3D[y][x]=0
+				elif self.arene.tableau[x][y]==0 and self.arene3D[x][y]!=0:
+					self.arene3D[x][y].removeNode()
+					self.arene3D[x][y]=0
 		return Task.again
 
