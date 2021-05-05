@@ -8,6 +8,7 @@ from .control import Controler
 
 
 # refaire controler
+# régler l'angle
 # GET MOTOR POSITION
 # PANDA 3D
 # 25 mai soutenance
@@ -22,22 +23,20 @@ try:
 except:
 	print("Robot Virtuelle")
 	#from .robot import Robot
-	r= Robot([])"""
+	r= Robot([])
+"""
 
 r= Robot([])
 c= Controler(r)
 a=Arene(r)
-f= Fenetre(a, c)
+f= Fenetre(a, c, fps)
 
-Frame_Cam(f.init_window, a, fps)
-
-threadf= Thread(target=f.boucle, args=(fps,))
 threada= Thread(target=a.boucle, args=(fps,))
 threadc= Thread(target=c.boucle, args=(fps,))
-threadf.start()
 threada.start()
 threadc.start()
 
+Frame_Cam(f.init_window, a, fps)
 
 # boucle principale
 f.init_window.mainloop()
