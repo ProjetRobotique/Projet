@@ -29,8 +29,7 @@ c= Controler(r)
 a=Arene(r)
 f= Fenetre(a, c)
 
-
-
+Frame_Cam(f.init_window, a, fps)
 
 threadf= Thread(target=f.boucle, args=(fps,))
 threada= Thread(target=a.boucle, args=(fps,))
