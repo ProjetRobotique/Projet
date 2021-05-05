@@ -32,7 +32,6 @@ class Controler(object):
 				break
 		if action==-1:
 			return
-		print(self.tab)
 		# s'arrêter
 		if action==0:
 			self.robot.stop()
