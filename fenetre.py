@@ -1,9 +1,16 @@
-from arene import Arene
 from math import pi as PI
 from tkinter import *
+from tkinter import ttk
 from threading import Thread
-from controler import Controler
 import time
+
+from panda3d.core import *
+from direct.showbase.ShowBase import ShowBase
+
+from controler import Controler
+from arene import Arene
+from view.view3D import MyApp
+
 
 class Fenetre:
 	def __init__(self, arene, control):
@@ -135,5 +142,33 @@ class Fenetre:
 		self.control.exit=True
 		time.sleep(0.5)
 		self.init_window.destroy()
+
+		
+class Frame_Cam(ttk.Frame):
+    def __init__(self, parent, arene):
+    
+        ttk.Frame.__init__(self, parent)
+        self.app = parent
+        self.app3d = None
+        self.arene= arene
+        
+        # create frame
+        self.ives = ttk.Frame(parent)  # add a frame to the canvas
+        self.ives.pack()
+    
+        self.launch_panda3d_app()  # launch panda3d app
+
+    def launch_panda3d_app(self):
+
+        # this is in case someone tries to launch a second panda3d app
+        try: base.destroy()
+        except NameError: pass
+    
+        self.app3d = MyApp(self.arene, self.ives)
+        
+        try:
+            self.app3d.run()
+        except SystemExit:
+            base.destroy()  # so if i close the panda3d window it will not shut down tkinter as well
 
 
