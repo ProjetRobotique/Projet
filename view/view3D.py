@@ -2,27 +2,25 @@ from direct.showbase.ShowBase import ShowBase
 from panda3d.core import * 
 from direct.directtools.DirectGeometry import LineNodePath 
 from panda3d.core import GeomVertexFormat, GeomVertexData, GeomVertexWriter, GeomTriangles, Geom, GeomNode, NodePath, GeomPoints, Point3,Vec3, Vec4, WindowProperties 
+from direct.task import Task
+
 import sys
+import time
 
 from tkinter import *
+from tkinter import ttk, Checkbutton, Canvas
+
 from ..arene import Arene
 from .cube import CubeMaker
 
 
 class MyApp(ShowBase):
-	def __init__(self, arene, ives_data):
+	def __init__(self, arene, ives_data, fps):
+		self.fps= fps
 		self.ives_data = ives_data
-		try:
-			ShowBase.__init__(self, windowType='none')
-		except Exception as e:  # this is an error when it tries to start a new instance of ShowBase
-			if str(e) == 'Attempt to spawn multiple ShowBase instances!':
-				return
-			else:
-				raise Exception
-		
-		# so far it has created a ShowBase with no window, now create a ShowBase instance with a window
-		base.destroy()
 		ShowBase.__init__(self, windowType='onscreen')
+
+		self.disableMouse()
 		
 		base.startTk()  # start Tk integration
 		base.spawnTkLoop()  # make panda3d part of the Tk mainloop
@@ -49,8 +47,9 @@ class MyApp(ShowBase):
 					L.append(0)
 			self.arene3D.append(L)
 		self.accept("escape", sys.exit)
+		taskMgr.add(self.update, 'update')
 
-
+	# Trace une grille
 	def grid(self):
 		raws1unit = 20
 		rawsfithunit = 10
@@ -111,26 +110,22 @@ class MyApp(ShowBase):
 			linesXX.drawLines([[lx1,lx2],[lx3,lx4]]) 
 			linesXX.create()
 
-	def boucle(self,fps):
-		while True:
-			if self.exit:
-				break
-			self.update(fps)
-			time.sleep(1./fps)
-
-	def update(self):
+	# update la vision de la camera
+	def update(self, task):
 		for y in range(len(self.arene.tableau)):
 			for x in range(len(self.arene.tableau[0])):
 				# Robot
-				if  self.self.arene.tableau[y][x]==2:
+				if  self.arene.tableau[y][x]==2:
 					self.cam.setPos(self.cube, x, -y, 0.5)
 					self.cam.setHpr(self.arene.angle, 0.0, 0.0)
 				# Obstacle nouveau
-				elif self.self.arene.tableau[y][x]==1 and self.arene3D[y][x]==0:
+				elif self.arene.tableau[y][x]==1 and self.arene3D[y][x]==0:
 					self.arene3D[y][x]= CubeMaker(0.5).generate()
 					self.arene3D[y][x].setPos(self.cube, x, -y, 0.0)
 					self.arene3D[y][x].reparentTo(render)
 				# Obstacle detruit
-				elif self.self.arene.tableau[y][x]==0 and self.arene3D[y][x]!=0:
+				elif self.arene.tableau[y][x]==0 and self.arene3D[y][x]!=0:
 					self.arene3D[y][x].destroy()
 					self.arene3D[y][x]=0
+		return Task.again
+
