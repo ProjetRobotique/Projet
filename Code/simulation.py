@@ -3,10 +3,13 @@ import time
 
 from .robots import Robot
 from .arene import Arene
-from .view import Fenetre, MyApp, Frame_Cam
+from .view import Fenetre, Camera, Frame_Cam
 from .control import Controler
 
 
+# refaire controler
+# PANDA 3D, reaire la grille
+# 25 mai soutenance
 r=0
 fps=20
 """

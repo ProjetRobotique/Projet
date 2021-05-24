@@ -1,2 +1,6 @@
-from .view3D import MyApp
+from .view3D import Camera
 from .fenetre import Fenetre, Frame_Cam
+
+
+
+

@@ -1,20 +1,24 @@
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import * 
 from direct.directtools.DirectGeometry import LineNodePath 
-from panda3d.core import GeomVertexFormat, GeomVertexData, GeomVertexWriter, GeomTriangles, Geom, GeomNode, NodePath, GeomPoints, Point3,Vec3, Vec4, WindowProperties 
+from panda3d.core import GeomVertexFormat, GraphicsEngine, GeomVertexData, GeomVertexWriter, GeomTriangles, Geom, GeomNode, NodePath, GeomPoints, Point3,Vec3, Vec4, WindowProperties 
 from direct.task import Task
+from direct.filter.CommonFilters import CommonFilters
 
 import sys
 import time
 
 from tkinter import *
-from tkinter import ttk, Checkbutton, Canvas
+from PIL import Image
+from random import random
+import numpy as np
+
 
 from ..arene import Arene
+from ..robots import Robot
 from .cube import CubeMaker
 
-
-class MyApp(ShowBase):
+class Camera(ShowBase):
 	def __init__(self, arene, ives_data, fps):
 		self.fps= fps
 		self.ives_data = ives_data
@@ -26,29 +30,83 @@ class MyApp(ShowBase):
 		base.spawnTkLoop()  # make panda3d part of the Tk mainloop
 		
 		# main jobs of the 3d-viewer follow here
-		self.exit=False
+		# Grille
 		self.grid()
-		self.cam.setPos(0.0, -20, 5.0)
-		self.cam.setHpr(0.0, -10, 0.0)
+		
 		self.arene= arene
+		# Arene 3d 
 		self.arene3D=[]
 		self.cube= CubeMaker(0.5).generate()
 		self.cube.setPos(-9.5, 9.5, 0.5)
 		self.cube.reparentTo(render)
+		# Creation des obstacles
 		for y in range(len(self.arene.tableau)):
 			L=[];
 			for x in range(len(self.arene.tableau[0])):
 				if self.arene.tableau[x][y]==1:
 					tmp= CubeMaker(0.5).generate()
-					tmp;setPos(self.cube, x, -y, 0.0)
+					tmp.setPos(self.cube, x, -y, 0.0)
 					tmp.reparentTo(render)
 					L.append(tmp)
 				else:
 					L.append(0)
 			self.arene3D.append(L)
-		self.accept("escape", sys.exit)
+		self.initBalise()
+		self.cam.setPos(self.cube, self.arene.robot.pos[0], -self.arene.robot.pos[1], 0.1)
+		# Ajout d'une tache qui actualise la camera
 		taskMgr.add(self.update, 'update')
 
+	# initalise une balise
+	def initBalise(self):
+		# coodonnee de la balise
+		x= 15
+		y= 0
+		self.arene.tableau[x][y]=3
+		
+		# generation d'une balise
+		self.balise= CubeMaker(0.5).generate()
+		self.balise.setPos(self.cube, x, -y, 0.0)
+		self.balise.reparentTo(render)
+		self.balise.setColor(255, 255, 255)
+		self.tex= loader.loadTexture('Image/balise.jpg')
+		self.balise.setTexGen(TextureStage.getDefault(), TexGenAttrib.MWorldPosition)
+		self.balise.setTexProjector(TextureStage.getDefault(), render, self.balise)
+		self.balise.setTexPos(TextureStage.getDefault(), 0.5,0.5,0.5)
+		self.balise.setTexture(self.tex)
+		self.balise.setHpr(0, 90,0)
+
+	# actualise la camera du robot
+	def get_image_camera(self):
+		self.graphicsEngine.renderFrame()
+		self.texture = Texture()
+		self.texture = self.win.getScreenshot()  
+		data = self.texture.getRamImageAs('RGBA')
+		image = np.frombuffer(data, np.uint8) 
+		image.shape = (self.texture.getYSize(), self.texture.getXSize(), self.texture.getNumComponents())
+		image = np.flipud(image)
+		self.arene.robot.camera= Image.fromarray(image, mode='RGBA')
+		return Task.again
+	
+	# update la vision de la camera
+	def update(self, task):
+		# camera Robot
+		self.cam.setPos(self.cube, self.arene.robot.pos[0], -self.arene.robot.pos[1], 0.1)
+		self.cam.setHpr(90-self.arene.angle, 0.0, 0.0)
+		# Obstacle
+		for y in range(len(self.arene.tableau)):
+			for x in range(len(self.arene.tableau[0])):
+				# Obstacle nouveau
+				if self.arene.tableau[x][y]==1 and self.arene3D[x][y]==0:
+					self.arene3D[x][y]= CubeMaker(0.5).generate()
+					self.arene3D[x][y].setPos(self.cube, x, -y, 0.0)
+					self.arene3D[x][y].reparentTo(render)
+				# Obstacle detruit
+				elif self.arene.tableau[x][y]==0 and self.arene3D[x][y]!=0:
+					self.arene3D[x][y].removeNode()
+					self.arene3D[x][y]=0
+		self.get_image_camera()
+		return Task.again
+	
 	# Trace une grille
 	def grid(self):
 		raws1unit = 20
@@ -109,23 +167,3 @@ class MyApp(ShowBase):
 	
 			linesXX.drawLines([[lx1,lx2],[lx3,lx4]]) 
 			linesXX.create()
-
-	# update la vision de la camera
-	def update(self, task):
-		# camera Robot
-		self.cam.setPos(self.cube, self.arene.robot.pos[0], -self.arene.robot.pos[1], 0.5)
-		self.cam.setHpr(90-self.arene.angle, 0.0, 0.0)
-		# Obstacle
-		for y in range(len(self.arene.tableau)):
-			for x in range(len(self.arene.tableau[0])):
-				# Obstacle nouveau
-				if self.arene.tableau[x][y]==1 and self.arene3D[x][y]==0:
-					self.arene3D[x][y]= CubeMaker(0.5).generate()
-					self.arene3D[x][y].setPos(self.cube, x, -y, 0.0)
-					self.arene3D[x][y].reparentTo(render)
-				# Obstacle detruit
-				elif self.arene.tableau[x][y]==0 and self.arene3D[x][y]!=0:
-					self.arene3D[x][y].removeNode()
-					self.arene3D[x][y]=0
-		return Task.again
-

@@ -2,6 +2,7 @@
 import math
 import time
 from ..robots import Robot
+from ..view import balise
 
 class StrategyAvance:
 	def __init__(self, robot, distance):
@@ -36,7 +37,7 @@ class StrategyAvance:
 		return False
 
 
-class StrategyTourneGauche:
+class StrategyTourner:
 	def __init__(self, robot, angle, direction):
 		self.robot= robot
 		self.angleCourant=0
@@ -64,7 +65,6 @@ class StrategyTourneGauche:
 		self.appelTime=0
 
 	def stop(self):
-		print(self.angleCourant)
 		if self.angleCourant>= self.angle:
 			self.robot.set_motor_dps(3, 0)
 			return True
@@ -89,3 +89,36 @@ class StrategySequence:
 
 	def stop(self):
 		return self.action>=len(self.tab)
+
+
+class StrategyChercherBalise:
+	def __init__(self, robot):
+		self.robot= robot
+		self.appelTime= 0
+		self.s_turnLeft= StrategyTourner(self.robot, 30, 0)
+		self.fin=False
+		self.i=0
+		self.turn=False
+	
+	def run(self):
+		if not self.turn:
+			val= balise.chercherBalise(self.robot.get_image())
+			if val=="balise absent":
+				self.turn=True
+				self.s_turnLeft.start()
+				self.i+=1
+			else:
+				self.fin=True
+		else:
+			if not self.s_turnLeft.stop():
+				self.s_turnLeft.run()
+			else: self.turn=False
+		
+
+	def start(self):
+		self.fin=False
+		self.turn= False
+		self.i=0
+
+	def stop(self):
+		return self.fin or self.i>12

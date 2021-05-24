@@ -10,14 +10,12 @@ from direct.showbase.ShowBase import ShowBase
 
 from ..control.controler import Controler
 from ..arene import Arene
-from .view3D import MyApp
+from .view3D import Camera
 
 class Fenetre:
 	def __init__(self, arene, control, fps):
 		# Ajout de l'arene
 		self.arene= arene
-		# En marche
-		self.exit= False
 		#Robot
 		self.robot= self.arene.robot
 		#Controler
@@ -28,9 +26,6 @@ class Fenetre:
 		self.init_window.title("C'est bien parti pour le 100/100")
 		self.init_window.geometry("1000x775")
 		self.init_window.config(background='#41B77F')
-
-		# Camera
-		#self.cam= Frame_Cam(self.init_window, self.arene)
 
 		#texte
 		self.label_title = Label(self.init_window, text="Clique gauche sur une case pour placer ou retirer un objet, le robot est dans la case rouge", font = ("",14), bg='#41B77F', fg='white')
@@ -68,14 +63,14 @@ class Fenetre:
 		self.button_carre = Button(self.frame_control, text="Tracer Carre", command=lambda:self.control.signal("tracerCarre"))
 		self.button_carre.pack()
 
-		self.button_d = Button(self.frame_control, text="distance", command=lambda:self.arene.robot.get_distance())
-		self.button_d.pack()
+		self.button_balise = Button(self.frame_control, text="balise", command=lambda:self.control.signal("balise"))
+		self.button_balise.pack()
 		
 		self.button_quit = Button(self.init_window, text="cliquer pour quitter", command=self.quit)
 		self.button_quit.pack(side=RIGHT)
 
 		# les 2 couleurs à utiliser
-		self.couleurs = {0: "white", 1: "#41B77F", 2: "red"}
+		self.couleurs = {0: "white", 1: "#41B77F", 2: "red", 3:"purple"}
 
 		# dimensions du canevas
 		self.can_width = 620
@@ -130,7 +125,6 @@ class Fenetre:
 		self.init_window.after(50, self.updateFenetre)
 
 	def quit(self):
-		self.exit=True
 		self.arene.exit=True
 		self.control.exit=True
 		time.sleep(0.5)
@@ -157,7 +151,7 @@ class Frame_Cam(ttk.Frame):
         try: base.destroy()
         except NameError: pass
     
-        self.app3d = MyApp(self.arene, self.ives, fps)
+        self.app3d = Camera(self.arene, self.ives, fps)
         
         try:
             self.app3d.run()

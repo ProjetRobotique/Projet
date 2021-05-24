@@ -12,7 +12,8 @@ class Robot:
       self.pos = [0.0,0.0]
       self.angle = 0
       self.vitesse_roue=[0,0] # En degre par seconde
-      
+      self.camera= 0
+
    def get_distance(self):
       ListeObstacle=[]
       TAILLE_ARENE_X = len(self.map)
@@ -47,20 +48,19 @@ class Robot:
       
    def mapUpdate(self,NouvelleCarte):
       self.map= NouvelleCarte
-  
-  
-class Robot_Proxy:
-   WHEEL_BASE_WIDTH = 117  # distance (mm) de la roue gauche a la roue droite.
-   WHEEL_DIAMETER   = 66.5 #  diametre de la roue (mm)
-   MOTOR_LEFT=1
-   MOTOR_RIGHT=2
 
+   def get_image(self):
+      return self.camera
+  
+  
+class Robot_Proxy(Robot):
    def __init__(self,carte, robot):
       self.map = carte #le robot recupere la grille
       self.pos = [0.0,0.0]
       self.angle = 0
       self.vitesse_roue=[0,0] # En degre par seconde
       self.robot= robot
+      self.camera= 0
 
    def set_motor_dps(self, port, dps): #prend en argument le nombre de tours par minutes en plus ou en moins voulus.
       if port==self.MOTOR_LEFT:
@@ -80,3 +80,6 @@ class Robot_Proxy:
 
    def mapUpdate(self,NouvelleCarte):
       self.map= NouvelleCarte
+
+   def get_image(self):
+      return self.robot.get_image()

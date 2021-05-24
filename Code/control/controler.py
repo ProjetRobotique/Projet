@@ -2,7 +2,7 @@
 from math import pi as PI
 import time
 from ..robots import Robot
-from .strategy import StrategyTourneGauche, StrategyAvance, StrategySequence
+from .strategy import StrategyTourner, StrategyAvance, StrategySequence, StrategyChercherBalise
 
 class Controler(object):
 	def __init__(self, robot):
@@ -10,12 +10,12 @@ class Controler(object):
 		self.robot= robot
 		self.tab=[0 for i in range(7)]
 		self.actionCourant=-1
-		self.s_turnLeft= StrategyTourneGauche(self.robot, 90, 0)
-		self.s_turnRight= StrategyTourneGauche(self.robot, 90, 1)
+		self.s_turnLeft= StrategyTourner(self.robot, 90, 0)
+		self.s_turnRight= StrategyTourner(self.robot, 90, 1)
 		self.s_forward= StrategyAvance(self.robot, 70)
 		carre= [self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward]
 		self.s_carre= StrategySequence(self.robot, carre)
-
+		self.s_suivreBalise= StrategyChercherBalise(self.robot)
 
 	def boucle(self,fps):
 		while True:
@@ -40,6 +40,11 @@ class Controler(object):
 		elif action==1:
 			if not self.s_forward.stop():
 				if self.s_forward.run()==1:  self.tab[action]=0
+			else: self.tab[action]=0
+		# Suivre Balise
+		elif action==2:
+			if not self.s_suivreBalise.stop():
+				self.s_suivreBalise.run()
 			else: self.tab[action]=0
 		# tracer un carre
 		elif action==4:
@@ -74,6 +79,9 @@ class Controler(object):
 		elif intention=="tournerDroite":
 			indice=3
 			self.s_turnRight.start()
+		elif intention=="balise":
+			indice=2
+			self.s_suivreBalise.start()
 
 		if indice==-1:
 			print("Controler: Erreur indice=-1")

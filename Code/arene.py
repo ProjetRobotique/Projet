@@ -20,6 +20,7 @@ class Arene:
 		self.robot.pos = [10.0,10.0]
 		self.angle=0
 		pos= self.robot.pos
+		# 0: pas d'obstacle, 1: obstacle, 2: robot, 3: balise
 		self.tableau[int(pos[0])][int(pos[1])]=2 #conversion des floats en entier
 		self.ts=time.time()
 	
