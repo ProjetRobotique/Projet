@@ -7,11 +7,6 @@ from .view import Fenetre, MyApp, Frame_Cam
 from .control import Controler
 
 
-# refaire controler
-# régler l'angle
-# GET MOTOR POSITION
-# PANDA 3D
-# 25 mai soutenance
 r=0
 fps=20
 """
