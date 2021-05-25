@@ -7,7 +7,7 @@ from .view import Fenetre, Camera, Frame_Cam
 from .control import Controler
 
 fps=20
-"""
+r=0
 try:
 	from .robot2I013 import Robot2I013
 	from .robot import Robot_Proxy
@@ -17,9 +17,7 @@ except:
 	print("Robot Virtuelle")
 	#from .robot import Robot
 	r= Robot([])
-"""
 
-r= Robot([])
 c= Controler(r)
 a=Arene(r)
 f= Fenetre(a, c, fps)
