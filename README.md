@@ -2,6 +2,13 @@
 
 Tout le code du projet
 
+Kai-luan : Christian
+zartyy : Simon 
+Jikfung07 : Youheng
+Andrevicente1 : André 
+Larry-Space :
+M12545 :
+
 Trello:
 https://trello.com/b/2DAld893/lu2in013
 
