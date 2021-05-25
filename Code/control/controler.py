@@ -15,7 +15,8 @@ class Controler(object):
 		self.s_forward= StrategyAvance(self.robot, 70)
 		carre= [self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward, self.s_turnLeft, self.s_forward]
 		self.s_carre= StrategySequence(self.robot, carre)
-		self.s_suivreBalise= StrategyChercherBalise(self.robot)
+		self.s_suivreBalise= StrategySequence(self.robot, [StrategyChercherBalise(self.robot), StrategyAvance(self.robot, 20)])
+
 
 	def boucle(self,fps):
 		while True:
